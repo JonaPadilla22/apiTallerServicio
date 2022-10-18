@@ -10,11 +10,8 @@ const notification_options = {
 
 route.post("/notification", (req, res) => {
   const registrationToken = req.body.token;
-  // const message = req.body.message;
   const message = "Hola Mundo";
   const options = notification_options;
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-  console.log(registrationToken);
 
   admin
     .messaging()

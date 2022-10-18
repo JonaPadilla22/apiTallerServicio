@@ -4,8 +4,7 @@ import cors from "cors";
 import routes from "./routes/index";
 import fileUpload from "express-fileupload";
 
-
-//const path = require('path');
+const path = require('path');
 const PORT = process.env.PORT || 3001; 
 const app = express();
 
@@ -19,7 +18,7 @@ app.use((_req, res, next) => {
     next();
 });
 
-//app.use(express.static(path.resolve(__dirname, '../files')));
+app.use(express.static(path.resolve(__dirname, '../files')));
 
 app.use(cors());
 
