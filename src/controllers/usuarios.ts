@@ -102,7 +102,7 @@ class UsuariosController {
                 const extFile = path.extname(file.name);
                 const img = id + extFile;
                 const data = {IMG: img}
-                file.mv("files/" + id + extFile);
+                file.mv("files/usuarios/" + id + extFile);
                 await UsuariosService.updateImg(data, id);
     
                 res.json({message: "ACTUALIZADO CON ÉXITO"});  
