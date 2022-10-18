@@ -9,13 +9,17 @@ const notification_options = {
 };
 
 route.post("/notification", (req, res) => {
+  
   const registrationToken = req.body.token;
-  const message = "Hola Mundo";
+
+  const message_notification = {
+    notification: req.body.notification
+  };
   const options = notification_options;
 
   admin
     .messaging()
-    .sendToDevice(registrationToken, message, options)
+    .sendToDevice(registrationToken, message_notification, options)
     .then((response: any) => {
       res
         .status(200)

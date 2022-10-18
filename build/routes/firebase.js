@@ -12,11 +12,14 @@ const notification_options = {
 };
 route.post("/notification", (req, res) => {
     const registrationToken = req.body.token;
-    const message = "Hola Mundo";
+    const message_notification = {
+        notification: req.body.notification
+    };
     const options = notification_options;
+    console.log(message_notification);
     firebase_config_1.default
         .messaging()
-        .sendToDevice(registrationToken, message, options)
+        .sendToDevice(registrationToken, message_notification, options)
         .then((response) => {
         res
             .status(200)
