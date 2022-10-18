@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const refacciones_1 = require("../controllers/refacciones");
+const route = (0, express_1.Router)();
+route.get('/', refacciones_1.RefaccionesController.getAll);
+route.get('/actives', refacciones_1.RefaccionesController.getActives);
+route.get('/tipo/:id', refacciones_1.RefaccionesController.getByTipo);
+route.get('/:id', refacciones_1.RefaccionesController.getById);
+route.post('/', refacciones_1.RefaccionesController.insert);
+route.put('/:id', refacciones_1.RefaccionesController.update);
+exports.default = route;

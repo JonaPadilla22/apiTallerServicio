@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const tipoRefaccion_1 = require("../controllers/tipoRefaccion");
+const route = (0, express_1.Router)();
+route.get('/', tipoRefaccion_1.RepairTypeController.getAll);
+route.get('/:id', tipoRefaccion_1.RepairTypeController.getById);
+route.post('/', tipoRefaccion_1.RepairTypeController.insert);
+route.put('/:id', tipoRefaccion_1.RepairTypeController.update);
+exports.default = route;

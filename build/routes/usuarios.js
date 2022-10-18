@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const usuarios_1 = require("../controllers/usuarios");
+const route = (0, express_1.Router)();
+route.get('/', usuarios_1.UsuariosController.getAll);
+route.get('/actives', usuarios_1.UsuariosController.getActives);
+route.get('/:id', usuarios_1.UsuariosController.getById);
+route.post('/', usuarios_1.UsuariosController.insert);
+route.put('/:id', usuarios_1.UsuariosController.update);
+route.put('/:id/pass/:pass', usuarios_1.UsuariosController.updatePassword);
+route.post('/actualizarImagen/:id', usuarios_1.UsuariosController.updateImagenPerfil);
+exports.default = route;
