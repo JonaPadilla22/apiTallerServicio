@@ -6,6 +6,7 @@ const route = Router()
 
 route.get('/', UsuariosController.getAll);
 route.get('/actives', UsuariosController.getActives);
+route.get('/clientes', UsuariosController.getClientes);
 route.get('/:id', UsuariosController.getById);
 
 route.post('/', UsuariosController.insert);

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Usuario } from "../interfaces/usuario";
 import { UsuariosService } from "../services/usuarios";
+import { UserTypeService } from "../services/tipoUsuario";
+import { TypePersonService } from "../services/tipoPersona";
 //import { enviar_mail } from "../utils/sendEmail";
 import { generatePass, encrypt } from "../utils/bcrypt";
 var path = require('path')
@@ -19,6 +21,33 @@ class UsuariosController {
         try{       
             const response = await UsuariosService.getUsersActive();       
            
+            res.json(response);
+        }catch(e){
+            res.status(500).json(e);
+        }  
+    } 
+
+    static getClientes = async (_req:Request, res:Response) => { 
+        try{       
+            const clientes = await UsuariosService.getClientes();       
+            const response: any = [];
+      
+            for (let i = 0; i < clientes.length; i++) {
+              const tipo_usuario = await UserTypeService.getUserTypeById(
+                clientes[i].ID_TIPO_USUARIO.toString()
+              );
+              delete clientes[i].ID_TIPO_USUARIO;
+              clientes[i].TIPO_USUARIO = tipo_usuario[0];
+
+              const tipo_persona = await TypePersonService.getTypeById(
+                clientes[i].ID_TIPO_PERSONA.toString()
+              );
+              delete clientes[i].ID_TIPO_PERSONA;
+              clientes[i].tipo_persona = tipo_persona[0];
+
+              response.push(clientes[i]);
+            }
+      
             res.json(response);
         }catch(e){
             res.status(500).json(e);

@@ -11,6 +11,14 @@ class UsuariosService {
         return users;  
     };
 
+    static getClientes = async () => {
+        let [rows] = await connection.query('SELECT * FROM usuario WHERE estatus = "A" AND id_tipo_usuario = 4');
+        let users = rows.map((r: any) => {
+            return r;
+        });
+        return users;  
+    };
+
     static getUsersActive = async () => {
         let [rows] = await connection.query('SELECT * FROM consultar_usuarios WHERE estatus = "A"');
         let users = rows.map((r: any) => {
