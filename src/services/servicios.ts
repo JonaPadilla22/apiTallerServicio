@@ -191,7 +191,9 @@ class ServiciosService {
 
     static insert = async (item: Servicio) => {     
         await connection.query('INSERT INTO servicio SET ?', [item]);
-        return item;      
+        const id_reg = await connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
+        const response = this.getById(id_reg);
+        return response;      
     };
     
     static update = async (item: Servicio, id: string) => {       
