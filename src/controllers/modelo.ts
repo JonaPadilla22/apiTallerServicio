@@ -40,6 +40,19 @@ class ModelController {
     }
   };
 
+  static getByMarca = async (req: Request, res: Response) => {
+    try {
+      const id_get = req.params.id;
+      const modelo = await ModelService.getModelByMarca(
+        id_get
+      );
+      delete modelo[0].ID_MARCA;
+      res.json(modelo[0]);
+    } catch (e) {
+      res.status(500).json(e);
+    }
+  };
+
   static insert = async (
     { body }: Request,
     res: Response

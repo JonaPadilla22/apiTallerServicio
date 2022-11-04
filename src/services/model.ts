@@ -5,18 +5,26 @@ import { connection } from "../database";
 class ModelService {
     static getModels = async () => {
         let [rows] = await connection.query('SELECT * FROM modelo_veh');
-        let users = rows.map((r: any) => {
+        let models = rows.map((r: any) => {
             return r;
         });
-        return users;  
+        return models;  
     };
 
     static getModelById = async (id: string) => {
         let [rows] = await connection.query('SELECT * FROM modelo_veh WHERE ID_MODELO = ?',[parseInt(id)]);
-        let users = rows.map((r: any) => {
+        let models = rows.map((r: any) => {
             return r;
         });
-        return users;   
+        return models;   
+    };
+
+    static getModelByMarca = async (id: string) => {
+        let [rows] = await connection.query('SELECT * FROM modelo_veh WHERE ID_MARCA = ?',[parseInt(id)]);
+        let models = rows.map((r: any) => {
+            return r;
+        });
+        return models;   
     };
     
     static getModelStatus = async (id: string) => {

@@ -4,6 +4,7 @@ import { ModelController } from "../controllers/modelo"
 const route = Router()
 
 route.get('/', ModelController.getAll);
+route.get('/marca/:id', ModelController.getByMarca);
 route.get('/:id', ModelController.getById);
 
 route.post('/', ModelController.insert);
