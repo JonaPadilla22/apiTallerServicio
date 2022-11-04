@@ -53,9 +53,11 @@ ServiciosService.getById = (id) => __awaiter(void 0, void 0, void 0, function* (
         const cliente = yield usuarios_1.UsuariosService.getUserById(servicios[i].CLIENTE.toString());
         delete servicios[i].CLIENTE;
         servicios[i].CLIENTE = cliente[0];
-        const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
-        delete servicios[i].TECNICO_ENCARGADO;
-        servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
         response.push(servicios[i]);
     }
     return response;
@@ -131,7 +133,9 @@ ServiciosService.getByEstatus = (id) => __awaiter(void 0, void 0, void 0, functi
 });
 ServiciosService.insert = (item) => __awaiter(void 0, void 0, void 0, function* () {
     yield database_1.connection.query('INSERT INTO servicio SET ?', [item]);
-    return item;
+    const id_reg = yield database_1.connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
+    const response = yield _a.getById(id_reg[0][0]['ID_SERVICIO']);
+    return response;
 });
 ServiciosService.update = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);

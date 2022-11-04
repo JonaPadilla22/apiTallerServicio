@@ -12,6 +12,8 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuariosController = void 0;
 const usuarios_1 = require("../services/usuarios");
+const tipoUsuario_1 = require("../services/tipoUsuario");
+const tipoPersona_1 = require("../services/tipoPersona");
 //import { enviar_mail } from "../utils/sendEmail";
 const bcrypt_1 = require("../utils/bcrypt");
 var path = require('path');
@@ -31,6 +33,25 @@ UsuariosController.getAll = (_req, res) => __awaiter(void 0, void 0, void 0, fun
 UsuariosController.getActives = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield usuarios_1.UsuariosService.getUsersActive();
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
+UsuariosController.getClientes = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const clientes = yield usuarios_1.UsuariosService.getClientes();
+        const response = [];
+        for (let i = 0; i < clientes.length; i++) {
+            const tipo_usuario = yield tipoUsuario_1.UserTypeService.getUserTypeById(clientes[i].ID_TIPO_USUARIO.toString());
+            delete clientes[i].ID_TIPO_USUARIO;
+            clientes[i].TIPO_USUARIO = tipo_usuario[0];
+            const tipo_persona = yield tipoPersona_1.TypePersonService.getTypeById(clientes[i].ID_TIPO_PERSONA.toString());
+            delete clientes[i].ID_TIPO_PERSONA;
+            clientes[i].tipo_persona = tipo_persona[0];
+            response.push(clientes[i]);
+        }
         res.json(response);
     }
     catch (e) {

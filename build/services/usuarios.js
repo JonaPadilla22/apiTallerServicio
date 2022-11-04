@@ -24,6 +24,13 @@ UsuariosService.getUsers = () => __awaiter(void 0, void 0, void 0, function* () 
     });
     return users;
 });
+UsuariosService.getClientes = () => __awaiter(void 0, void 0, void 0, function* () {
+    let [rows] = yield database_1.connection.query('SELECT * FROM usuario WHERE estatus = "A" AND id_tipo_usuario = 4');
+    let users = rows.map((r) => {
+        return r;
+    });
+    return users;
+});
 UsuariosService.getUsersActive = () => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM consultar_usuarios WHERE estatus = "A"');
     let users = rows.map((r) => {

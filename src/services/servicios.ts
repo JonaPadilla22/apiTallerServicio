@@ -63,12 +63,14 @@ class ServiciosService {
             delete servicios[i].CLIENTE;
             servicios[i].CLIENTE = cliente[0];
 
-            const tecnico = await UsuariosService.getUserById(
-                servicios[i].TECNICO_ENCARGADO.toString()
-            );
-            delete servicios[i].TECNICO_ENCARGADO;
-            servicios[i].TECNICO_ENCARGADO = tecnico[0];
-
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];    
+            }
+            
 
             response.push(servicios[i]);
         }
@@ -192,7 +194,7 @@ class ServiciosService {
     static insert = async (item: Servicio) => {     
         await connection.query('INSERT INTO servicio SET ?', [item]);
         const id_reg = await connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
-        const response = this.getById(id_reg[0]['ID_SERVICIO']);
+        const response = await this.getById(id_reg[0][0]['ID_SERVICIO']);
         return response;      
     };
     

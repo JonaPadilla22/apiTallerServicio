@@ -5,6 +5,7 @@ const usuarios_1 = require("../controllers/usuarios");
 const route = (0, express_1.Router)();
 route.get('/', usuarios_1.UsuariosController.getAll);
 route.get('/actives', usuarios_1.UsuariosController.getActives);
+route.get('/clientes', usuarios_1.UsuariosController.getClientes);
 route.get('/:id', usuarios_1.UsuariosController.getById);
 route.post('/', usuarios_1.UsuariosController.insert);
 route.put('/:id', usuarios_1.UsuariosController.update);

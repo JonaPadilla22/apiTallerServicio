@@ -16,7 +16,6 @@ route.post("/notification", (req, res) => {
         notification: req.body.notification
     };
     const options = notification_options;
-    console.log(message_notification);
     firebase_config_1.default
         .messaging()
         .sendToDevice(registrationToken, message_notification, options)
