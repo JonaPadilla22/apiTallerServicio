@@ -46,8 +46,7 @@ class ModelController {
       const modelo = await ModelService.getModelByMarca(
         id_get
       );
-      delete modelo[0].ID_MARCA;
-      res.json(modelo[0]);
+      res.json(modelo);
     } catch (e) {
       res.status(500).json(e);
     }
