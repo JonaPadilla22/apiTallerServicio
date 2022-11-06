@@ -39,12 +39,14 @@ class UsuariosController {
               delete clientes[i].ID_TIPO_USUARIO;
               clientes[i].TIPO_USUARIO = tipo_usuario[0];
 
-              const tipo_persona = await TypePersonService.getTypeById(
-                clientes[i].ID_TIPO_PERSONA.toString()
-              );
-              delete clientes[i].ID_TIPO_PERSONA;
-              clientes[i].tipo_persona = tipo_persona[0];
-
+              if(clientes[i].ID_TIPO_PERSONA!=null){
+                const tipo_persona = await TypePersonService.getTypeById(
+                    clientes[i].ID_TIPO_PERSONA.toString()
+                  );
+                  delete clientes[i].ID_TIPO_PERSONA;
+                  clientes[i].TIPO_PERSONA = tipo_persona[0];
+              }
+              
               response.push(clientes[i]);
             }
       
