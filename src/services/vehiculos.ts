@@ -43,21 +43,11 @@ class VehiculosService {
     };
 
     static getAllVehByCliente = async (id: string) => {
-        let [rows] = await connection.query('SELECT * FROM cliente_veh WHERE id_usuario = ?', [id]);
-        var veh: any = [];
-
-        for(let i = 0; i < rows.length; i++) {
-            delete rows[i].ID_USUARIO;
-            const vehiculo = await this.getById(
-                rows[i].MATRICULA.toString()
-            );
-            delete rows[i].MATRICULA;
-            rows[i].VEHICULO = vehiculo[0];
-
-            veh.push(rows[i]);
-        }
-
-        return veh;  
+        let [rows] = await connection.query('SELECT * FROM consultar_vehiculos WHERE id_cliente = ?', [id]);
+        let veh = rows.map((r: any) => {
+            return r;
+        });
+        return veh; 
     };
 
     static insert = async (item: Vehiculo) => {     
