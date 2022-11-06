@@ -52,7 +52,9 @@ class UsuariosService {
 
         if(count == 0){      
             await connection.query('INSERT INTO usuario SET ?', [item]);
-            return item;
+            const id_reg = await connection.query('SELECT ID_USUARIO from usuario ORDER BY id_usuario DESC LIMIT 1');
+            const response = await this.getUserById(id_reg[0][0]['ID_USUARIO']);
+            return response[0];
         }else{
             return "CORREO YA REGISTRADO"
         }
