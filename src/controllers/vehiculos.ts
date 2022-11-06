@@ -46,8 +46,9 @@ class VehiculosController {
     
     static insert = async ({ body }:Request, res:Response) => {
         try{                  
-            const veh: Vehiculo = body;                 
-            const response = await VehiculosService.insert(veh);
+            const veh: Vehiculo = body;            
+            const matr: string = body.MATRICULA;     
+            const response = await VehiculosService.insert(veh, matr);
 
             res.status(201).json({message: "REGISTRADO CON ÉXITO", data: response});     
         }catch(e){

@@ -50,9 +50,10 @@ class VehiculosService {
         return veh; 
     };
 
-    static insert = async (item: Vehiculo) => {     
+    static insert = async (item: Vehiculo, matricula: string) => {     
         await connection.query('INSERT INTO vehiculo SET ?', [item]);
-        return item;      
+        const response = await this.getById(matricula);
+        return response[0];   
     };
     
     static update = async (item: Vehiculo, id: string) => {       
