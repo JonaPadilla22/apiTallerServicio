@@ -47,9 +47,11 @@ UsuariosController.getClientes = (_req, res) => __awaiter(void 0, void 0, void 0
             const tipo_usuario = yield tipoUsuario_1.UserTypeService.getUserTypeById(clientes[i].ID_TIPO_USUARIO.toString());
             delete clientes[i].ID_TIPO_USUARIO;
             clientes[i].TIPO_USUARIO = tipo_usuario[0];
-            const tipo_persona = yield tipoPersona_1.TypePersonService.getTypeById(clientes[i].ID_TIPO_PERSONA.toString());
-            delete clientes[i].ID_TIPO_PERSONA;
-            clientes[i].tipo_persona = tipo_persona[0];
+            if (clientes[i].ID_TIPO_PERSONA != null) {
+                const tipo_persona = yield tipoPersona_1.TypePersonService.getTypeById(clientes[i].ID_TIPO_PERSONA.toString());
+                delete clientes[i].ID_TIPO_PERSONA;
+                clientes[i].TIPO_PERSONA = tipo_persona[0];
+            }
             response.push(clientes[i]);
         }
         res.json(response);
@@ -79,6 +81,7 @@ UsuariosController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0,
             // if(response==user){
             //     await enviar_mail(user, newPass, 1);
             // }
+            console.log("que");
             res.status(201).json({ message: "REGISTRADO CON ÉXITO", data: response });
         }
         else {

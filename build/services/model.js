@@ -19,17 +19,24 @@ exports.ModelService = ModelService;
 _a = ModelService;
 ModelService.getModels = () => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM modelo_veh');
-    let users = rows.map((r) => {
+    let models = rows.map((r) => {
         return r;
     });
-    return users;
+    return models;
 });
 ModelService.getModelById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM modelo_veh WHERE ID_MODELO = ?', [parseInt(id)]);
-    let users = rows.map((r) => {
+    let models = rows.map((r) => {
         return r;
     });
-    return users;
+    return models;
+});
+ModelService.getModelByMarca = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    let [rows] = yield database_1.connection.query('SELECT * FROM modelo_veh WHERE ID_MARCA = ?', [parseInt(id)]);
+    let models = rows.map((r) => {
+        return r;
+    });
+    return models;
 });
 ModelService.getModelStatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT estatus FROM modelo_veh WHERE ID_MODELO = ?', [id]);

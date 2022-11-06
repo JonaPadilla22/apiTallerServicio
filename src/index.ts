@@ -7,7 +7,7 @@ import fileUpload from "express-fileupload";
 const path = require('path');
 const PORT = process.env.PORT || 3001; 
 const app = express();
-
+app.use(express.urlencoded({extended: true}))
 app.use(fileUpload());
 app.use((_req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");

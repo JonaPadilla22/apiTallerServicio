@@ -46,6 +46,16 @@ ModelController.getById = (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(500).json(e);
     }
 });
+ModelController.getByMarca = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id_get = req.params.id;
+        const modelo = yield model_1.ModelService.getModelByMarca(id_get);
+        res.json(modelo);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
 ModelController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield model_1.ModelService.insertModel(body);

@@ -60,6 +60,7 @@ UsuariosService.insertUser = (item) => __awaiter(void 0, void 0, void 0, functio
     var count = rows[0]['COUNT(*)'];
     if (count == 0) {
         yield database_1.connection.query('INSERT INTO usuario SET ?', [item]);
+        console.log(item);
         return item;
     }
     else {

@@ -75,7 +75,7 @@ class UsuariosController {
             user.CONTRA = passEnc;
             
             const response = await UsuariosService.insertUser(user);
-
+            
             if(response != "CORREO YA REGISTRADO"){
                 // if(response==user){
                 //     await enviar_mail(user, newPass, 1);

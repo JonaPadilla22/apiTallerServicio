@@ -11,6 +11,7 @@ const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const path = require('path');
 const PORT = process.env.PORT || 3001;
 const app = (0, express_1.default)();
+app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, express_fileupload_1.default)());
 app.use((_req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
