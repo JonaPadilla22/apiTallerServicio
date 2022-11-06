@@ -59,9 +59,9 @@ UsuariosService.insertUser = (item) => __awaiter(void 0, void 0, void 0, functio
     let [rows] = yield database_1.connection.query('SELECT COUNT(*) FROM usuario WHERE correo = ?', [item.CORREO]);
     var count = rows[0]['COUNT(*)'];
     if (count == 0) {
-        yield database_1.connection.query('INSERT INTO usuario SET ?', [item]);
-        console.log(item);
-        return item;
+        const id_reg = yield database_1.connection.query('INSERT INTO usuario SET ?; SELECT ID_USUARIO from usuario ORDER BY id_usuario DESC LIMIT 1;', [item]);
+        const response = yield _a.getUserById(id_reg[0][1][0].ID_USUARIO.toString());
+        return response[0];
     }
     else {
         return "CORREO YA REGISTRADO";

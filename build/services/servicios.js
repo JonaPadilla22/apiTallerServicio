@@ -135,7 +135,7 @@ ServiciosService.insert = (item) => __awaiter(void 0, void 0, void 0, function* 
     yield database_1.connection.query('INSERT INTO servicio SET ?', [item]);
     const id_reg = yield database_1.connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
     const response = yield _a.getById(id_reg[0][0]['ID_SERVICIO']);
-    return response;
+    return response[0];
 });
 ServiciosService.update = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
