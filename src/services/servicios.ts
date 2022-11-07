@@ -29,12 +29,14 @@ class ServiciosService {
             delete servicios[i].CLIENTE;
             servicios[i].CLIENTE = cliente[0];
 
-            const tecnico = await UsuariosService.getUserById(
-                servicios[i].TECNICO_ENCARGADO.toString()
-            );
-            delete servicios[i].TECNICO_ENCARGADO;
-            servicios[i].TECNICO_ENCARGADO = tecnico[0];
-
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            }
+            
             response.push(servicios[i]);
         }
         return response;
@@ -71,7 +73,6 @@ class ServiciosService {
                 servicios[i].TECNICO_ENCARGADO = tecnico[0];    
             }
             
-
             response.push(servicios[i]);
         }
         return response; 
@@ -96,11 +97,13 @@ class ServiciosService {
             delete servicios[i].ID_ESTATUS;
             servicios[i].ESTATUS = estatus[0];
 
-            const tecnico = await UsuariosService.getUserById(
-                servicios[i].TECNICO_ENCARGADO.toString()
-            );
-            delete servicios[i].TECNICO_ENCARGADO;
-            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            }
 
             response.push(servicios[i]);
         }
@@ -124,11 +127,13 @@ class ServiciosService {
             delete servicios[i].ID_ESTATUS;
             servicios[i].ESTATUS = estatus[0];
 
-            const tecnico = await UsuariosService.getUserById(
-                servicios[i].TECNICO_ENCARGADO.toString()
-            );
-            delete servicios[i].TECNICO_ENCARGADO;
-            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            }
 
             response.push(servicios[i]);
         }
@@ -180,11 +185,13 @@ class ServiciosService {
             delete servicios[i].CLIENTE;
             servicios[i].CLIENTE = cliente[0];
 
-            const tecnico = await UsuariosService.getUserById(
-                servicios[i].TECNICO_ENCARGADO.toString()
-            );
-            delete servicios[i].TECNICO_ENCARGADO;
-            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            }
 
             response.push(servicios[i]);
         }
