@@ -42,6 +42,42 @@ class ServiciosService {
         return response;
     };
 
+    static getPendientes = async () => {
+        const [servicios] = await connection.query('SELECT * FROM servicio WHERE estatus = "I" OR estatus = "R" OR estatus = "S"');
+        const response: any = [];
+
+        for(let i = 0; i < servicios.length; i++) {
+            const tipoServ = await ServiceTypeService.getServiceById(
+                servicios[i].ID_TIPO_SERVICIO.toString()
+            );
+            delete servicios[i].ID_TIPO_SERVICIO;
+            servicios[i].TIPO_SERVICIO = tipoServ[0];
+
+            const estatus = await this.getEstatus(
+                servicios[i].ID_ESTATUS.toString()
+            );
+            delete servicios[i].ID_ESTATUS;
+            servicios[i].ESTATUS = estatus[0];
+
+            const cliente = await UsuariosService.getUserById(
+                servicios[i].CLIENTE.toString()
+            );
+            delete servicios[i].CLIENTE;
+            servicios[i].CLIENTE = cliente[0];
+
+            if(servicios[i].TECNICO_ENCARGADO!=null){
+                const tecnico = await UsuariosService.getUserById(
+                    servicios[i].TECNICO_ENCARGADO.toString()
+                );
+                delete servicios[i].TECNICO_ENCARGADO;
+                servicios[i].TECNICO_ENCARGADO = tecnico[0];
+            }
+            
+            response.push(servicios[i]);
+        }
+        return response;
+    };
+
     static getById = async (id: string) => {
         const [servicios] = await connection.query('SELECT * FROM servicio WHERE id_servicio = ?', [id]);
         const response: any = [];

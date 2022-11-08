@@ -4,6 +4,7 @@ import { ServiciosController } from "../controllers/servicios"
 const route = Router()
 
 route.get('/', ServiciosController.getAll);
+route.get('/pendientes', ServiciosController.getPendientes);
 route.get('/cliente/:id', ServiciosController.getByCliente);
 route.get('/vehiculo/:id', ServiciosController.getByVehiculo);
 route.get('/tecnico/:id', ServiciosController.getByTecnico);
