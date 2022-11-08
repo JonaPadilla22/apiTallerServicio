@@ -4,6 +4,7 @@ import { ManoDeObraService } from "./manoDeObra";
 import { UsuariosService } from "./usuarios";
 import { connection } from "../database";
 import { RefaccionesService } from "./refacciones";
+import { VehiculosService } from "./vehiculos";
 
 class ServiciosService {
     static getAll = async () => {
@@ -16,6 +17,12 @@ class ServiciosService {
             );
             delete servicios[i].ID_TIPO_SERVICIO;
             servicios[i].TIPO_SERVICIO = tipoServ[0];
+
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
 
             const estatus = await this.getEstatus(
                 servicios[i].ID_ESTATUS.toString()
@@ -53,6 +60,12 @@ class ServiciosService {
             delete servicios[i].ID_TIPO_SERVICIO;
             servicios[i].TIPO_SERVICIO = tipoServ[0];
 
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
+
             const estatus = await this.getEstatus(
                 servicios[i].ID_ESTATUS.toString()
             );
@@ -88,6 +101,12 @@ class ServiciosService {
             );
             delete servicios[i].ID_TIPO_SERVICIO;
             servicios[i].TIPO_SERVICIO = tipoServ[0];
+
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
 
             const estatus = await this.getEstatus(
                 servicios[i].ID_ESTATUS.toString()
@@ -126,6 +145,12 @@ class ServiciosService {
             servicios[i].TIPO_SERVICIO = tipoServ[0];
 
             delete servicios[i].CLIENTE;
+
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
 
             const estatus = await this.getEstatus(
                 servicios[i].ID_ESTATUS.toString()
@@ -187,6 +212,12 @@ class ServiciosService {
             delete servicios[i].ID_TIPO_SERVICIO;
             servicios[i].TIPO_SERVICIO = tipoServ[0];
 
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
+
             const estatus = await this.getEstatus(
                 servicios[i].ID_ESTATUS.toString()
             );
@@ -214,6 +245,12 @@ class ServiciosService {
             );
             delete servicios[i].ID_TIPO_SERVICIO;
             servicios[i].TIPO_SERVICIO = tipoServ[0];
+
+            const veh = await VehiculosService.getById(
+                servicios[i].MATRICULA.toString()
+            );
+            delete servicios[i].MATRICULA;
+            servicios[i].VEHICULO = veh[0];
 
             const cliente = await UsuariosService.getUserById(
                 servicios[i].CLIENTE.toString()
