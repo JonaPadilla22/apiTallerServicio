@@ -43,7 +43,7 @@ class ServiciosService {
     };
 
     static getPendientes = async () => {
-        const [servicios] = await connection.query('SELECT * FROM servicio WHERE estatus = "I" OR estatus = "R" OR estatus = "S"');
+        const [servicios] = await connection.query('SELECT * FROM servicio WHERE id_estatus = "I" OR id_estatus = "R" OR id_estatus = "S"');
         const response: any = [];
 
         for(let i = 0; i < servicios.length; i++) {
