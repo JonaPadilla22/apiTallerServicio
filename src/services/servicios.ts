@@ -368,8 +368,9 @@ class ServiciosService {
         return response; 
     };
 
-    static insertActualizacion = async (item: DetalleServicio) => {     
+    static insertActualizacion = async (item: any) => {     
         await connection.query('INSERT INTO actualizacion_servicio SET ?', [item]);
+        await connection.query('UPDATE servicio SET estatus = ? WHERE id_servicio = ?', [item.ID_ESTATUS, item.ID_SERVICIO]);
         return item;      
     };
 }

@@ -149,7 +149,7 @@ class ServiciosController {
         try{                               
             const response = await ServiciosService.insertActualizacion(body);
 
-            res.status(201).json({message: "REGISTRADO CON ÉXITO", data: response});     
+            res.status(201).json({message: "ACTUALIZADO CON ÉXITO", data: response});     
         }catch(e){
             res.status(500).json(e);
         }
