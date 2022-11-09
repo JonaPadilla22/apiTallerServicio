@@ -312,6 +312,14 @@ class ServiciosService {
         return response; 
     };
 
+    static getAllEstatus = async () => {
+        let [rows] = await connection.query('SELECT * FROM estatus');
+        let estatus = rows.map((r: any) => {
+            return r;
+        });
+        return estatus;  
+    };
+
     static getEstatus = async (id: string) => {
         let [rows] = await connection.query('SELECT * FROM estatus WHERE ID_ESTATUS = ?', [id]);
         let estatus = rows.map((r: any) => {

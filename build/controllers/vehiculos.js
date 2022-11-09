@@ -57,7 +57,8 @@ VehiculosController.getAllVehByCliente = (req, res) => __awaiter(void 0, void 0,
 VehiculosController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const veh = body;
-        const response = yield vehiculos_1.VehiculosService.insert(veh);
+        const matr = body.MATRICULA;
+        const response = yield vehiculos_1.VehiculosService.insert(veh, matr);
         res.status(201).json({ message: "REGISTRADO CON ÉXITO", data: response });
     }
     catch (e) {

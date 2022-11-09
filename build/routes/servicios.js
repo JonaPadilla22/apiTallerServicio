@@ -4,6 +4,8 @@ const express_1 = require("express");
 const servicios_1 = require("../controllers/servicios");
 const route = (0, express_1.Router)();
 route.get('/', servicios_1.ServiciosController.getAll);
+route.get('/estatus', servicios_1.ServiciosController.getEstatus);
+route.get('/pendientes', servicios_1.ServiciosController.getPendientes);
 route.get('/cliente/:id', servicios_1.ServiciosController.getByCliente);
 route.get('/vehiculo/:id', servicios_1.ServiciosController.getByVehiculo);
 route.get('/tecnico/:id', servicios_1.ServiciosController.getByTecnico);

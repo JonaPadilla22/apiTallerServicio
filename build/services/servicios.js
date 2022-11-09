@@ -16,6 +16,7 @@ const manoDeObra_1 = require("./manoDeObra");
 const usuarios_1 = require("./usuarios");
 const database_1 = require("../database");
 const refacciones_1 = require("./refacciones");
+const vehiculos_1 = require("./vehiculos");
 class ServiciosService {
 }
 exports.ServiciosService = ServiciosService;
@@ -27,15 +28,45 @@ ServiciosService.getAll = () => __awaiter(void 0, void 0, void 0, function* () {
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
         delete servicios[i].ID_TIPO_SERVICIO;
         servicios[i].TIPO_SERVICIO = tipoServ[0];
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
         const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
         delete servicios[i].ID_ESTATUS;
         servicios[i].ESTATUS = estatus[0];
         const cliente = yield usuarios_1.UsuariosService.getUserById(servicios[i].CLIENTE.toString());
         delete servicios[i].CLIENTE;
         servicios[i].CLIENTE = cliente[0];
-        const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
-        delete servicios[i].TECNICO_ENCARGADO;
-        servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
+        response.push(servicios[i]);
+    }
+    return response;
+});
+ServiciosService.getPendientes = () => __awaiter(void 0, void 0, void 0, function* () {
+    const [servicios] = yield database_1.connection.query('SELECT * FROM servicio WHERE id_estatus = "I" OR id_estatus = "R" OR id_estatus = "S"');
+    const response = [];
+    for (let i = 0; i < servicios.length; i++) {
+        const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
+        delete servicios[i].ID_TIPO_SERVICIO;
+        servicios[i].TIPO_SERVICIO = tipoServ[0];
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
+        const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
+        delete servicios[i].ID_ESTATUS;
+        servicios[i].ESTATUS = estatus[0];
+        const cliente = yield usuarios_1.UsuariosService.getUserById(servicios[i].CLIENTE.toString());
+        delete servicios[i].CLIENTE;
+        servicios[i].CLIENTE = cliente[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
         response.push(servicios[i]);
     }
     return response;
@@ -47,6 +78,9 @@ ServiciosService.getById = (id) => __awaiter(void 0, void 0, void 0, function* (
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
         delete servicios[i].ID_TIPO_SERVICIO;
         servicios[i].TIPO_SERVICIO = tipoServ[0];
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
         const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
         delete servicios[i].ID_ESTATUS;
         servicios[i].ESTATUS = estatus[0];
@@ -70,12 +104,17 @@ ServiciosService.getByCliente = (id) => __awaiter(void 0, void 0, void 0, functi
         delete servicios[i].ID_TIPO_SERVICIO;
         servicios[i].TIPO_SERVICIO = tipoServ[0];
         delete servicios[i].CLIENTE;
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
         const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
         delete servicios[i].ID_ESTATUS;
         servicios[i].ESTATUS = estatus[0];
-        const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
-        delete servicios[i].TECNICO_ENCARGADO;
-        servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
         response.push(servicios[i]);
     }
     return response;
@@ -90,9 +129,11 @@ ServiciosService.getByVehiculo = (id) => __awaiter(void 0, void 0, void 0, funct
         const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
         delete servicios[i].ID_ESTATUS;
         servicios[i].ESTATUS = estatus[0];
-        const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
-        delete servicios[i].TECNICO_ENCARGADO;
-        servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
         response.push(servicios[i]);
     }
     return response;
@@ -104,6 +145,9 @@ ServiciosService.getByTecnico = (id) => __awaiter(void 0, void 0, void 0, functi
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
         delete servicios[i].ID_TIPO_SERVICIO;
         servicios[i].TIPO_SERVICIO = tipoServ[0];
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
         const estatus = yield _a.getEstatus(servicios[i].ID_ESTATUS.toString());
         delete servicios[i].ID_ESTATUS;
         servicios[i].ESTATUS = estatus[0];
@@ -121,12 +165,17 @@ ServiciosService.getByEstatus = (id) => __awaiter(void 0, void 0, void 0, functi
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
         delete servicios[i].ID_TIPO_SERVICIO;
         servicios[i].TIPO_SERVICIO = tipoServ[0];
+        const veh = yield vehiculos_1.VehiculosService.getById(servicios[i].MATRICULA.toString());
+        delete servicios[i].MATRICULA;
+        servicios[i].VEHICULO = veh[0];
         const cliente = yield usuarios_1.UsuariosService.getUserById(servicios[i].CLIENTE.toString());
         delete servicios[i].CLIENTE;
         servicios[i].CLIENTE = cliente[0];
-        const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
-        delete servicios[i].TECNICO_ENCARGADO;
-        servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        if (servicios[i].TECNICO_ENCARGADO != null) {
+            const tecnico = yield usuarios_1.UsuariosService.getUserById(servicios[i].TECNICO_ENCARGADO.toString());
+            delete servicios[i].TECNICO_ENCARGADO;
+            servicios[i].TECNICO_ENCARGADO = tecnico[0];
+        }
         response.push(servicios[i]);
     }
     return response;
@@ -162,6 +211,13 @@ ServiciosService.getDetalleServicio = (id) => __awaiter(void 0, void 0, void 0, 
         response.push(detalle[i]);
     }
     return response;
+});
+ServiciosService.getAllEstatus = () => __awaiter(void 0, void 0, void 0, function* () {
+    let [rows] = yield database_1.connection.query('SELECT * FROM estatus');
+    let estatus = rows.map((r) => {
+        return r;
+    });
+    return estatus;
 });
 ServiciosService.getEstatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM estatus WHERE ID_ESTATUS = ?', [id]);

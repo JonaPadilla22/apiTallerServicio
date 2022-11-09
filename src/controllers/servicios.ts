@@ -12,6 +12,15 @@ class ServiciosController {
         }  
     }
 
+    static getEstatus = async (_req:Request, res:Response) => { 
+        try{       
+            const response = await ServiciosService.getAllEstatus();              
+            res.json(response);
+        }catch(e){
+            res.status(500).json(e);
+        }  
+    }
+
     static getPendientes = async (_req:Request, res:Response) => { 
         try{       
             const response = await ServiciosService.getPendientes();              

@@ -25,6 +25,24 @@ ServiciosController.getAll = (_req, res) => __awaiter(void 0, void 0, void 0, fu
         res.status(500).json(e);
     }
 });
+ServiciosController.getEstatus = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield servicios_1.ServiciosService.getAllEstatus();
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
+ServiciosController.getPendientes = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield servicios_1.ServiciosService.getPendientes();
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
 ServiciosController.getById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id_get = req.params.id;

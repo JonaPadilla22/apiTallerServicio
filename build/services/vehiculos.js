@@ -46,20 +46,16 @@ VehiculosService.getAllClienteVeh = () => __awaiter(void 0, void 0, void 0, func
     return veh;
 });
 VehiculosService.getAllVehByCliente = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    let [rows] = yield database_1.connection.query('SELECT * FROM cliente_veh WHERE id_usuario = ?', [id]);
-    var veh = [];
-    for (let i = 0; i < rows.length; i++) {
-        delete rows[i].ID_USUARIO;
-        const vehiculo = yield _a.getById(rows[i].MATRICULA.toString());
-        delete rows[i].MATRICULA;
-        rows[i].VEHICULO = vehiculo[0];
-        veh.push(rows[i]);
-    }
+    let [rows] = yield database_1.connection.query('SELECT * FROM consultar_vehiculos WHERE id_cliente = ?', [id]);
+    let veh = rows.map((r) => {
+        return r;
+    });
     return veh;
 });
-VehiculosService.insert = (item) => __awaiter(void 0, void 0, void 0, function* () {
+VehiculosService.insert = (item, matricula) => __awaiter(void 0, void 0, void 0, function* () {
     yield database_1.connection.query('INSERT INTO vehiculo SET ?', [item]);
-    return item;
+    const response = yield _a.getById(matricula);
+    return response[0];
 });
 VehiculosService.update = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE vehiculo SET ? WHERE matricula = ?', [item, id]);

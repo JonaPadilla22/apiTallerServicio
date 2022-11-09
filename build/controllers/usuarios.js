@@ -77,7 +77,6 @@ UsuariosController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0,
         const user = body;
         user.CONTRA = passEnc;
         const response = yield usuarios_1.UsuariosService.insertUser(user);
-        console.log("respo contr: " + response);
         if (response != "CORREO YA REGISTRADO") {
             // if(response==user){
             //     await enviar_mail(user, newPass, 1);
