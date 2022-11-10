@@ -255,5 +255,6 @@ ServiciosService.getActualizacionByUsuario = (id) => __awaiter(void 0, void 0, v
 });
 ServiciosService.insertActualizacion = (item) => __awaiter(void 0, void 0, void 0, function* () {
     yield database_1.connection.query('INSERT INTO actualizacion_servicio SET ?', [item]);
+    yield database_1.connection.query('UPDATE servicio SET id_estatus = ? WHERE id_servicio = ?', [item.ID_ESTATUS, item.ID_SERVICIO]);
     return item;
 });

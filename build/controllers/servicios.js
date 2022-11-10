@@ -157,7 +157,7 @@ ServiciosController.getActualizacionByUsuario = (req, res) => __awaiter(void 0, 
 ServiciosController.insertActualizacion = ({ body }, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield servicios_1.ServiciosService.insertActualizacion(body);
-        res.status(201).json({ message: "REGISTRADO CON ÉXITO", data: response });
+        res.status(201).json({ message: "ACTUALIZADO CON ÉXITO", data: response });
     }
     catch (e) {
         res.status(500).json(e);
