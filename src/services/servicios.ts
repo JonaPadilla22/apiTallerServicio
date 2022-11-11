@@ -238,7 +238,7 @@ class ServiciosService {
     static getByEstatus = async (id: string) => {
         let [servicios]: any = [];
         if(id=="T"){
-            [servicios] = await connection.query('SELECT s.*, a.FECHA as "FECHA_TERMINO" FROM servicio s, actualizacion_servicio a WHERE s.id_estatus = ? AND a.ID_ESTATUS = ? AND a.ID_SERVICIO = s.ID_SERVICIO', [id]);
+            [servicios] = await connection.query('SELECT s.*, a.FECHA as "FECHA_TERMINO" FROM servicio s, actualizacion_servicio a WHERE a.ID_SERVICIO = s.ID_SERVICIO AND s.id_estatus = ? AND a.ID_ESTATUS = ?', [id]);
         }else{
             [servicios] = await connection.query('SELECT * FROM servicio WHERE id_estatus = ?', [id]);
         }
