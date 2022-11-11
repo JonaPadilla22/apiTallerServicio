@@ -236,7 +236,13 @@ class ServiciosService {
     };
 
     static getByEstatus = async (id: string) => {
-        const [servicios] = await connection.query('SELECT * FROM servicio WHERE id_estatus = ?', [id]);
+        let [servicios]: any = [];
+        if(id=="T"){
+            [servicios] = await connection.query('SELECT s.*, a.FECHA as "FECHA_TERMINO" FROM servicio s, actualizacion_servicio a WHERE s.id_estatus = ? AND a.ID_ESTATUS = ? AND a.ID_SERVICIO = s.ID_SERVICIO', [id]);
+        }else{
+            [servicios] = await connection.query('SELECT * FROM servicio WHERE id_estatus = ?', [id]);
+        }
+        
         const response: any = [];
 
         for(let i = 0; i < servicios.length; i++) {
