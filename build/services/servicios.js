@@ -47,7 +47,7 @@ ServiciosService.getAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return response;
 });
 ServiciosService.getPendientes = () => __awaiter(void 0, void 0, void 0, function* () {
-    const [servicios] = yield database_1.connection.query('SELECT * FROM servicio WHERE id_estatus = "I" OR id_estatus = "R" OR id_estatus = "S"');
+    const [servicios] = yield database_1.connection.query('SELECT * FROM servicio WHERE id_estatus = "E" OR id_estatus = "I" OR id_estatus = "R" OR id_estatus = "S"');
     const response = [];
     for (let i = 0; i < servicios.length; i++) {
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());
@@ -159,7 +159,13 @@ ServiciosService.getByTecnico = (id) => __awaiter(void 0, void 0, void 0, functi
     return response;
 });
 ServiciosService.getByEstatus = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const [servicios] = yield database_1.connection.query('SELECT * FROM servicio WHERE id_estatus = ?', [id]);
+    let [servicios] = [];
+    if (id == "T") {
+        [servicios] = yield database_1.connection.query('SELECT s.*, a.FECHA as "FECHA_TERMINO" FROM servicio s, actualizacion_servicio a WHERE a.ID_SERVICIO = s.ID_SERVICIO AND s.id_estatus = ? AND a.ID_ESTATUS = ?', [id, id]);
+    }
+    else {
+        [servicios] = yield database_1.connection.query('SELECT * FROM servicio WHERE id_estatus = ?', [id]);
+    }
     const response = [];
     for (let i = 0; i < servicios.length; i++) {
         const tipoServ = yield tipoServicio_1.ServiceTypeService.getServiceById(servicios[i].ID_TIPO_SERVICIO.toString());

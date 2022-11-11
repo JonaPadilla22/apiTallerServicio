@@ -17,6 +17,24 @@ class UsuariosController {
         }  
     }  
 
+    static getByToken = async (req:Request, res:Response) => { 
+        try{
+            let response: any;
+            if(req.headers.authorization){
+                const jwtRecibida = req.headers.authorization || "";
+                const jwt = jwtRecibida.split(" ").pop();
+                response = await UsuariosService.getByToken(jwt);    
+            }else{
+                response = "";
+            }
+               
+           
+            res.json(response);
+        }catch(e){
+            res.status(500).json(e);
+        }  
+    }
+
     static getActives = async (_req:Request, res:Response) => { 
         try{       
             const response = await UsuariosService.getUsersActive();       

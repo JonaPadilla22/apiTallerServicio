@@ -12,6 +12,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuariosService = void 0;
 const database_1 = require("../database");
+const jwt_1 = require("../utils/jwt");
 //import { isValidUser, isValidUserStatus } from "../utils/valid";
 class UsuariosService {
 }
@@ -23,6 +24,11 @@ UsuariosService.getUsers = () => __awaiter(void 0, void 0, void 0, function* () 
         return r;
     });
     return users;
+});
+UsuariosService.getByToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const sesion = (0, jwt_1.verificarToken)(`${token}`);
+    var obj = JSON.parse(JSON.stringify(sesion));
+    return yield UsuariosService.getUserById(obj['id']);
 });
 UsuariosService.getClientes = () => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM usuario WHERE estatus = "A" AND id_tipo_usuario = 4');

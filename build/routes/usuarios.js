@@ -4,6 +4,7 @@ const express_1 = require("express");
 const usuarios_1 = require("../controllers/usuarios");
 const route = (0, express_1.Router)();
 route.get('/', usuarios_1.UsuariosController.getAll);
+route.get('/token', usuarios_1.UsuariosController.getByToken);
 route.get('/actives', usuarios_1.UsuariosController.getActives);
 route.get('/clientes', usuarios_1.UsuariosController.getClientes);
 route.get('/:id', usuarios_1.UsuariosController.getById);

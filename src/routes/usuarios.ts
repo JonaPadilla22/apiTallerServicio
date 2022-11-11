@@ -5,6 +5,7 @@ import { UsuariosController } from "../controllers/usuarios"
 const route = Router()
 
 route.get('/', UsuariosController.getAll);
+route.get('/token', UsuariosController.getByToken);
 route.get('/actives', UsuariosController.getActives);
 route.get('/clientes', UsuariosController.getClientes);
 route.get('/:id', UsuariosController.getById);

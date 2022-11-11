@@ -1,5 +1,6 @@
 import { Usuario } from "../interfaces/usuario";
 import { connection } from "../database";
+import { verificarToken } from "../utils/jwt";
 //import { isValidUser, isValidUserStatus } from "../utils/valid";
 
 class UsuariosService {
@@ -9,6 +10,13 @@ class UsuariosService {
             return r;
         });
         return users;  
+    };
+
+    static getByToken = async (token?: string) => {      
+        const sesion = verificarToken(`${token}`);
+        var obj = JSON.parse(JSON.stringify(sesion));
+            
+        return await UsuariosService.getUserById(obj['id']);
     };
 
     static getClientes = async () => {

@@ -30,6 +30,23 @@ UsuariosController.getAll = (_req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json(e);
     }
 });
+UsuariosController.getByToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let response;
+        if (req.headers.authorization) {
+            const jwtRecibida = req.headers.authorization || "";
+            const jwt = jwtRecibida.split(" ").pop();
+            response = yield usuarios_1.UsuariosService.getByToken(jwt);
+        }
+        else {
+            response = "";
+        }
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
 UsuariosController.getActives = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield usuarios_1.UsuariosService.getUsersActive();
