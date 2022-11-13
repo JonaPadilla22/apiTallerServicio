@@ -8,8 +8,14 @@ const notification_options = {
   
 class FirebaseService {
     static registerTokenUser = async (item: any) => {
-        await connection.query('INSERT INTO token_usuario SET ?', [item]);
-        return "TOKEN REGISTRADO";
+        let [rows] = await connection.query('SELECT COUNT(*) FROM token_usuario WHERE token = ?',[item.TOKEN]);
+        var count = rows[0]['COUNT(*)'];
+        if(count == 0){   
+            await connection.query('INSERT INTO token_usuario SET ?', [item]);
+            return "TOKEN REGISTRADO";
+        }else{
+            return "TOKEN PREVIAMENTE REGISTRADO";
+        }     
     };   
 
     static sendNotificationUser = async (id: string, notification: any) => {
