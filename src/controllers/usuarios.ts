@@ -129,7 +129,7 @@ class UsuariosController {
             const newpass = req.body.CONTRA;
             const isPass = await UsuariosService.checkUserPassword(pass, id);
             if(!isPass){
-                res.status(304).json({message: "CONTRASEÑA ACTUAL INCORRECTA"}); 
+                res.status(304).json({error: "CONTRASEÑA ACTUAL INCORRECTA"}); 
             }
 
             const passEnc = await encrypt(newpass);
