@@ -3,7 +3,7 @@ import { Usuario } from "../interfaces/usuario";
 import { UsuariosService } from "../services/usuarios";
 import { UserTypeService } from "../services/tipoUsuario";
 import { TypePersonService } from "../services/tipoPersona";
-//import { enviar_mail } from "../utils/sendEmail";
+import { enviar_mail } from "../utils/sendEmail";
 import { generatePass, encrypt } from "../utils/bcrypt";
 var path = require('path')
 class UsuariosController {
@@ -94,9 +94,9 @@ class UsuariosController {
             
             const response = await UsuariosService.insertUser(user);
             if(response != "CORREO YA REGISTRADO"){
-                // if(response==user){
-                //     await enviar_mail(user, newPass, 1);
-                // }
+                if(response==user){
+                    await enviar_mail(user.CORREO, user.NOMBRE, newPass);
+                }
     
                 res.status(201).json({message: "REGISTRADO CON ÉXITO", data: response});
             }else{
