@@ -126,9 +126,16 @@ class UsuariosController {
             const id = req.params.id;
             const pass = req.params.pass;
 
-            const passEnc = await encrypt(pass);
+            const newpass = req.body.CONTRA;
+            const isPass = await UsuariosService.checkUserPassword(pass, id);
+            if(!isPass){
+                res.status(304).json({message: "CONTRASEÑA ACTUAL INCORRECTA"}); 
+            }
 
+            const passEnc = await encrypt(newpass);
             await UsuariosService.updateUserPassword(passEnc, id);
+            res.status(201).json({message: "ACTUALIZADO CON EXITO"});
+            
 
             // const resp = await UsuariosService.getUserById(id);
 
@@ -136,7 +143,7 @@ class UsuariosController {
 
             // await enviar_mail(user, pass, 2);
             
-            res.status(201).json({message: "ACTUALIZADO CON EXITO"});
+            //res.status(201).json({message: "ACTUALIZADO CON EXITO"});
         }catch(e){
             res.status(500).json(e);
         }

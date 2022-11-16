@@ -1,6 +1,7 @@
 import { Usuario } from "../interfaces/usuario";
 import { connection } from "../database";
 import { verificarToken } from "../utils/jwt";
+import { verified } from "../utils/bcrypt";
 //import { isValidUser, isValidUserStatus } from "../utils/valid";
 
 class UsuariosService {
@@ -70,6 +71,16 @@ class UsuariosService {
     static updateUser = async (item: Usuario, id: string) => {       
         const responseInsert = await connection.query('UPDATE usuario SET ? WHERE id_usuario = ?', [item, id]);
         return responseInsert;        
+    };
+
+    static checkUserPassword = async (pass: string, id: string) => {      
+        let [rows] = await connection.execute('SELECT * FROM usuario where id_usuario=?', [id]);
+        let users = rows.map((r: any) => {
+            return r;
+        });
+        var obj = JSON.parse(JSON.stringify(users[0]));
+        const passHash = obj['CONTRA'];
+        return await verified(pass, passHash);      
     };
 
     static updateUserPassword = async (pass: string, id: string) => {      
