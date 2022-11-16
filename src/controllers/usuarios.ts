@@ -130,6 +130,7 @@ class UsuariosController {
             const isPass = await UsuariosService.checkUserPassword(pass, id);
             if(!isPass){
                 res.status(304).json({error: "CONTRASEÑA ACTUAL INCORRECTA"}); 
+                return;
             }
 
             const passEnc = await encrypt(newpass);
