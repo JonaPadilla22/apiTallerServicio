@@ -25,8 +25,15 @@ class FirebaseService {
 exports.FirebaseService = FirebaseService;
 _a = FirebaseService;
 FirebaseService.registerTokenUser = (item) => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.connection.query('INSERT INTO token_usuario SET ?', [item]);
-    return "TOKEN REGISTRADO";
+    let [rows] = yield database_1.connection.query('SELECT COUNT(*) FROM token_usuario WHERE token = ?', [item.TOKEN]);
+    var count = rows[0]['COUNT(*)'];
+    if (count == 0) {
+        yield database_1.connection.query('INSERT INTO token_usuario SET ?', [item]);
+        return "TOKEN REGISTRADO";
+    }
+    else {
+        return "TOKEN PREVIAMENTE REGISTRADO";
+    }
 });
 FirebaseService.sendNotificationUser = (id, notification) => __awaiter(void 0, void 0, void 0, function* () {
     //obtener tokens de id usuario

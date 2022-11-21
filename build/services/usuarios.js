@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsuariosService = void 0;
 const database_1 = require("../database");
 const jwt_1 = require("../utils/jwt");
+const bcrypt_1 = require("../utils/bcrypt");
 //import { isValidUser, isValidUserStatus } from "../utils/valid";
 class UsuariosService {
 }
@@ -76,6 +77,15 @@ UsuariosService.insertUser = (item) => __awaiter(void 0, void 0, void 0, functio
 UsuariosService.updateUser = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE usuario SET ? WHERE id_usuario = ?', [item, id]);
     return responseInsert;
+});
+UsuariosService.checkUserPassword = (pass, id) => __awaiter(void 0, void 0, void 0, function* () {
+    let [rows] = yield database_1.connection.execute('SELECT * FROM usuario where id_usuario=?', [id]);
+    let users = rows.map((r) => {
+        return r;
+    });
+    var obj = JSON.parse(JSON.stringify(users[0]));
+    const passHash = obj['CONTRA'];
+    return yield (0, bcrypt_1.verified)(pass, passHash);
 });
 UsuariosService.updateUserPassword = (pass, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE usuario SET contra = ? WHERE id_usuario = ?', [pass, id]);

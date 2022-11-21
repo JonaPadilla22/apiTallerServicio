@@ -16,7 +16,12 @@ class FirebaseService {
         }else{
             return "TOKEN PREVIAMENTE REGISTRADO";
         }     
-    };   
+    }; 
+    
+    static deleteToken = async (token: string) => {
+        await connection.query('DELETE FROM token_usuario WHERE token = ?', [token]);
+        return "ELIMINADO CORRECTAMENTE";
+    };
 
     static sendNotificationUser = async (id: string, notification: any) => {
         //obtener tokens de id usuario

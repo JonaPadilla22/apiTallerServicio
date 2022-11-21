@@ -14,7 +14,7 @@ exports.UsuariosController = void 0;
 const usuarios_1 = require("../services/usuarios");
 const tipoUsuario_1 = require("../services/tipoUsuario");
 const tipoPersona_1 = require("../services/tipoPersona");
-//import { enviar_mail } from "../utils/sendEmail";
+const sendEmail_1 = require("../utils/sendEmail");
 const bcrypt_1 = require("../utils/bcrypt");
 var path = require('path');
 class UsuariosController {
@@ -95,9 +95,7 @@ UsuariosController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0,
         user.CONTRA = passEnc;
         const response = yield usuarios_1.UsuariosService.insertUser(user);
         if (response != "CORREO YA REGISTRADO") {
-            // if(response==user){
-            //     await enviar_mail(user, newPass, 1);
-            // }
+            yield (0, sendEmail_1.enviar_mail)(user.CORREO, user.NOMBRE, newPass);
             res.status(201).json({ message: "REGISTRADO CON ÉXITO", data: response });
         }
         else {
@@ -123,12 +121,19 @@ UsuariosController.updatePassword = (req, res) => __awaiter(void 0, void 0, void
     try {
         const id = req.params.id;
         const pass = req.params.pass;
-        const passEnc = yield (0, bcrypt_1.encrypt)(pass);
+        const newpass = req.body.CONTRA;
+        const isPass = yield usuarios_1.UsuariosService.checkUserPassword(pass, id);
+        if (!isPass) {
+            res.status(304).json({ error: "CONTRASEÑA ACTUAL INCORRECTA" });
+            return;
+        }
+        const passEnc = yield (0, bcrypt_1.encrypt)(newpass);
         yield usuarios_1.UsuariosService.updateUserPassword(passEnc, id);
+        res.status(201).json({ message: "ACTUALIZADO CON EXITO" });
         // const resp = await UsuariosService.getUserById(id);
         // const user: Usuario = {CORREO: resp[0]['CORREO'], NOMBRE: resp[0]['NOMBRE'], CONTRA: ""};
         // await enviar_mail(user, pass, 2);
-        res.status(201).json({ message: "ACTUALIZADO CON EXITO" });
+        //res.status(201).json({message: "ACTUALIZADO CON EXITO"});
     }
     catch (e) {
         res.status(500).json(e);

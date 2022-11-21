@@ -16,6 +16,18 @@ class FirebaseController {
         }
     }
 
+    static deleteToken = async (req:Request, res:Response) => { 
+        try{
+            const token = req.body.TOKEN;
+
+            const response = await FirebaseService.deleteToken(token);
+
+            res.json(response);
+        }catch(e){
+            res.send(e);
+        }
+    }
+
     static sendNotifications = async (req:Request, res:Response) => { 
         try{
             //const registrationToken = body.token;

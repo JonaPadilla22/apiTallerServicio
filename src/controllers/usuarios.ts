@@ -94,10 +94,7 @@ class UsuariosController {
             
             const response = await UsuariosService.insertUser(user);
             if(response != "CORREO YA REGISTRADO"){
-                if(response==user){
-                    await enviar_mail(user.CORREO, user.NOMBRE, newPass);
-                }
-    
+                await enviar_mail(user.CORREO, user.NOMBRE, newPass);
                 res.status(201).json({message: "REGISTRADO CON ÉXITO", data: response});
             }else{
                 res.status(500).json(response);
@@ -153,6 +150,7 @@ class UsuariosController {
     static updateImagenPerfil = async (req:Request, res:Response) => {
         try{
             if(req.files){
+                
                 const id = req.params.id;
                 const file: any = req.files.file; 
                 const extFile = path.extname(file.name);
