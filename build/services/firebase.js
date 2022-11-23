@@ -35,6 +35,10 @@ FirebaseService.registerTokenUser = (item) => __awaiter(void 0, void 0, void 0, 
         return "TOKEN PREVIAMENTE REGISTRADO";
     }
 });
+FirebaseService.deleteToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    yield database_1.connection.query('DELETE FROM token_usuario WHERE token = ?', [token]);
+    return "ELIMINADO CORRECTAMENTE";
+});
 FirebaseService.sendNotificationUser = (id, notification) => __awaiter(void 0, void 0, void 0, function* () {
     //obtener tokens de id usuario
     let [rows] = yield database_1.connection.query('SELECT token FROM token_usuario WHERE id_usuario = ?', [id]);

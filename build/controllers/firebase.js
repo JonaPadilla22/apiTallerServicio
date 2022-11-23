@@ -28,6 +28,16 @@ FirebaseController.registerToken = (req, res) => __awaiter(void 0, void 0, void 
         res.send(e);
     }
 });
+FirebaseController.deleteToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const token = req.body.TOKEN;
+        const response = yield firebase_1.FirebaseService.deleteToken(token);
+        res.json(response);
+    }
+    catch (e) {
+        res.send(e);
+    }
+});
 FirebaseController.sendNotifications = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //const registrationToken = body.token;
