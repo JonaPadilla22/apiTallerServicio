@@ -41,6 +41,7 @@ UsuariosController.getByToken = (req, res) => __awaiter(void 0, void 0, void 0, 
         else {
             response = "";
         }
+        console.log(response);
         res.json(response);
     }
     catch (e) {

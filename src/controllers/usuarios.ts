@@ -27,8 +27,7 @@ class UsuariosController {
             }else{
                 response = "";
             }
-               
-           
+    
             res.json(response);
         }catch(e){
             res.status(500).json(e);

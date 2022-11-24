@@ -229,7 +229,7 @@ class ServiciosService {
             );
             delete servicios[i].CLIENTE;
             servicios[i].CLIENTE = cliente[0];
-
+            delete servicios[i].TECNICO_ENCARGADO;
             response.push(servicios[i]);
         }
         return response; 
