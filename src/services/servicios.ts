@@ -290,7 +290,14 @@ class ServiciosService {
     };
     
     static insertDetalle = async (item: DetalleServicio) => {     
-        await connection.query('INSERT INTO detalle_servicio SET ?', [item]);
+        const res = await connection.query('SELECT * FROM detalle_servicio WHERE id_servicio = ? AND id_producto = ? AND tipo_prod = ?', [item.ID_SERVICIO, item.ID_PRODUCTO, item.TIPO_PROD]);
+
+        if(res[0][0]){
+            await connection.query('UPDATE detalle_servicio SET cantidad = cantidad + ? WHERE id_servicio = ? AND id_producto = ? AND tipo_prod = ?', [item.CANTIDAD, item.ID_SERVICIO, item.ID_PRODUCTO, item.TIPO_PROD]);
+        }else{
+            await connection.query('INSERT INTO detalle_servicio SET ?', [item]);
+        }
+        //await connection.query('INSERT INTO detalle_servicio SET ?', [item]);
         return item;      
     };
 

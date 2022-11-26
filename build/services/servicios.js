@@ -154,6 +154,7 @@ ServiciosService.getByTecnico = (id) => __awaiter(void 0, void 0, void 0, functi
         const cliente = yield usuarios_1.UsuariosService.getUserById(servicios[i].CLIENTE.toString());
         delete servicios[i].CLIENTE;
         servicios[i].CLIENTE = cliente[0];
+        delete servicios[i].TECNICO_ENCARGADO;
         response.push(servicios[i]);
     }
     return response;
@@ -197,7 +198,14 @@ ServiciosService.update = (item, id) => __awaiter(void 0, void 0, void 0, functi
     return responseInsert;
 });
 ServiciosService.insertDetalle = (item) => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.connection.query('INSERT INTO detalle_servicio SET ?', [item]);
+    const res = yield database_1.connection.query('SELECT * FROM detalle_servicio WHERE id_servicio = ? AND id_producto = ? AND tipo_prod = ?', [item.ID_SERVICIO, item.ID_PRODUCTO, item.TIPO_PROD]);
+    if (res[0][0]) {
+        yield database_1.connection.query('UPDATE detalle_servicio SET cantidad = cantidad + ? WHERE id_servicio = ? AND id_producto = ? AND tipo_prod = ?', [item.CANTIDAD, item.ID_SERVICIO, item.ID_PRODUCTO, item.TIPO_PROD]);
+    }
+    else {
+        yield database_1.connection.query('INSERT INTO detalle_servicio SET ?', [item]);
+    }
+    //await connection.query('INSERT INTO detalle_servicio SET ?', [item]);
     return item;
 });
 ServiciosService.getDetalleServicio = (id) => __awaiter(void 0, void 0, void 0, function* () {
