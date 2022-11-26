@@ -205,6 +205,9 @@ ServiciosService.insertDetalle = (item) => __awaiter(void 0, void 0, void 0, fun
     else {
         yield database_1.connection.query('INSERT INTO detalle_servicio SET ?', [item]);
     }
+    if (item.TIPO_PROD == "R") {
+        yield database_1.connection.query('UPDATE refaccion SET stock = stock - ? WHERE id_refaccion = ?', [item.CANTIDAD, item.ID_PRODUCTO]);
+    }
     //await connection.query('INSERT INTO detalle_servicio SET ?', [item]);
     return item;
 });
