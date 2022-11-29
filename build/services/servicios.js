@@ -188,10 +188,17 @@ ServiciosService.getByEstatus = (id) => __awaiter(void 0, void 0, void 0, functi
     return response;
 });
 ServiciosService.insert = (item) => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.connection.query('INSERT INTO servicio SET ?', [item]);
-    const id_reg = yield database_1.connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
-    const response = yield _a.getById(id_reg[0][0]['ID_SERVICIO']);
-    return response[0];
+    let [rows] = yield database_1.connection.query('SELECT COUNT(*) FROM servicio WHERE matricula = ? AND (ID_ESTATUS = "I" OR ID_ESTATUS = "E" OR ID_ESTATUS = "R" OR ID_ESTATUS = "S")', [item.MATRICULA]);
+    var count = rows[0]['COUNT(*)'];
+    if (count == 0) {
+        yield database_1.connection.query('INSERT INTO servicio SET ?', [item]);
+        const id_reg = yield database_1.connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
+        const response = yield _a.getById(id_reg[0][0]['ID_SERVICIO']);
+        return response[0];
+    }
+    else {
+        return "VEHICULO SE ENCUENTRA EN TALLER";
+    }
 });
 ServiciosService.update = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
     const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);

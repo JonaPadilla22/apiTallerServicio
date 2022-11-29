@@ -278,10 +278,16 @@ class ServiciosService {
     };
 
     static insert = async (item: Servicio) => {     
-        await connection.query('INSERT INTO servicio SET ?', [item]);
-        const id_reg = await connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
-        const response = await this.getById(id_reg[0][0]['ID_SERVICIO']);
-        return response[0];
+        let [rows] = await connection.query('SELECT COUNT(*) FROM servicio WHERE matricula = ? AND (ID_ESTATUS = "I" OR ID_ESTATUS = "E" OR ID_ESTATUS = "R" OR ID_ESTATUS = "S")',[item.MATRICULA]);
+        var count = rows[0]['COUNT(*)'];
+        if(count == 0){      
+            await connection.query('INSERT INTO servicio SET ?', [item]);
+            const id_reg = await connection.query('SELECT ID_SERVICIO from servicio ORDER BY id_servicio DESC LIMIT 1');
+            const response = await this.getById(id_reg[0][0]['ID_SERVICIO']);
+            return response[0];
+        }else{
+            return "VEHICULO SE ENCUENTRA EN TALLER"
+        }      
     };
     
     static update = async (item: Servicio, id: string) => {       
