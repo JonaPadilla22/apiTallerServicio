@@ -11,6 +11,15 @@ class ManoDeObraController {
         }   
     }
 
+    static getActives = async (_req:Request, res:Response) => {          
+        try{
+            const response = await ManoDeObraService.getWorkforcesActives();
+            res.json(response);
+        }catch(e){
+            res.status(500).json(e);
+        }   
+    }
+
     static getById = async (req:Request, res:Response) => {          
         try{
             const id_get = req.params.id;

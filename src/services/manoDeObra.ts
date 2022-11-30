@@ -11,6 +11,14 @@ class ManoDeObraService {
         return users;  
     };
 
+    static getWorkforcesActives = async () => {
+        let [rows] = await connection.query('SELECT * FROM mano_obra WHERE estatus = "A"');
+        let users = rows.map((r: any) => {
+            return r;
+        });
+        return users;  
+    };
+
     static getWorkforceById = async (id: string) => {
         let [rows] = await connection.query('SELECT * FROM mano_obra WHERE ID_MANO_OBRA = ?',[parseInt(id)]);
         let users = rows.map((r: any) => {
