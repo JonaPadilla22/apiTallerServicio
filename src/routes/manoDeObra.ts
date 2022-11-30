@@ -4,7 +4,7 @@ import { ManoDeObraController } from "../controllers/manoDeObra"
 const route = Router()
 
 route.get('/', ManoDeObraController.getAll);
-route.get('/actives', ManoDeObraController.getAll);
+route.get('/actives', ManoDeObraController.getActives);
 route.get('/:id', ManoDeObraController.getById);
 
 route.post('/', ManoDeObraController.insert);
