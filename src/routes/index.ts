@@ -18,7 +18,7 @@ import dashboard from "./dashboard";
 const routes = Router();
 
 routes.use("/auth", auth);
-routes.use("/usuarios", revisarSesion, usuarios);
+routes.use("/usuarios", usuarios);
 routes.use("/vehiculos", vehiculos);
 routes.use("/refacciones", refacciones);
 routes.use("/servicios", servicios);
