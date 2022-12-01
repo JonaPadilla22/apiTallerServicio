@@ -97,12 +97,11 @@ ServiciosController.insert = ({ body }, res) => __awaiter(void 0, void 0, void 0
     try {
         const veh = body;
         const response = yield servicios_1.ServiciosService.insert(veh);
-        console.log(response);
         if (response != "VEHICULO SE ENCUENTRA EN TALLER") {
             res.status(201).json({ message: "REGISTRADO CON ÉXITO", data: response });
         }
         else {
-            res.json({ message: "VEHICULO SE ENCUENTRA EN TALLER" }).status(204);
+            res.json({ message: "VEHÍCULO SE ENCUENTRA EN TALLER" }).status(204);
         }
     }
     catch (e) {
@@ -113,8 +112,13 @@ ServiciosController.update = (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const id = req.params.id;
         const data = req.body;
-        yield servicios_1.ServiciosService.update(data, id);
-        res.json({ message: "ACTUALIZADO CON ÉXITO" });
+        const response = yield servicios_1.ServiciosService.update(data, id);
+        if (response != "VEHICULO SE ENCUENTRA EN TALLER") {
+            res.status(201).json({ message: "ACTUALIZADO CON ÉXITO", data: response });
+        }
+        else {
+            res.json({ message: "VEHÍCULO SE ENCUENTRA EN TALLER" }).status(204);
+        }
     }
     catch (e) {
         res.status(500).json(e);

@@ -25,6 +25,15 @@ ManoDeObraController.getAll = (_req, res) => __awaiter(void 0, void 0, void 0, f
         res.status(500).json(e);
     }
 });
+ManoDeObraController.getActives = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield manoDeObra_1.ManoDeObraService.getWorkforcesActives();
+        res.json(response);
+    }
+    catch (e) {
+        res.status(500).json(e);
+    }
+});
 ManoDeObraController.getById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id_get = req.params.id;

@@ -84,11 +84,11 @@ class ServiciosController {
         try{                  
             const veh: Servicio = body;                 
             const response = await ServiciosService.insert(veh);
-            console.log(response)
+
             if(response != "VEHICULO SE ENCUENTRA EN TALLER"){
                 res.status(201).json({message: "REGISTRADO CON ÉXITO", data: response});     
             }else{
-                res.json({message: "VEHICULO SE ENCUENTRA EN TALLER"}).status(204);     
+                res.json({message: "VEHÍCULO SE ENCUENTRA EN TALLER"}).status(204);     
             }
 
         }catch(e){
@@ -101,9 +101,13 @@ class ServiciosController {
             const id = req.params.id;
             const data: Servicio = req.body;
 
-            await ServiciosService.update(data, id);
+            const response = await ServiciosService.update(data, id);
 
-            res.json({message: "ACTUALIZADO CON ÉXITO"});         
+            if(response != "VEHICULO SE ENCUENTRA EN TALLER"){
+                res.status(201).json({message: "ACTUALIZADO CON ÉXITO", data: response});     
+            }else{
+                res.json({message: "VEHÍCULO SE ENCUENTRA EN TALLER"}).status(204);     
+            }        
         }catch(e){
             res.status(500).json(e);
         }

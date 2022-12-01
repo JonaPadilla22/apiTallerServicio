@@ -290,9 +290,22 @@ class ServiciosService {
         }      
     };
     
-    static update = async (item: Servicio, id: string) => {       
-        const responseInsert = await connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
-        return responseInsert;        
+    static update = async (item: Servicio, id: string) => {  
+
+        if(item.ID_ESTATUS){
+            let [rows] = await connection.query('SELECT COUNT(*) FROM servicio WHERE matricula = ? AND (ID_ESTATUS = "I" OR ID_ESTATUS = "E" OR ID_ESTATUS = "R" OR ID_ESTATUS = "S") AND id_servicio != ?',[item.MATRICULA, id]);
+            var count = rows[0]['COUNT(*)'];
+            if(count==0){
+                const responseInsert = await connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
+                return responseInsert; 
+            }else{
+                return "VEHICULO SE ENCUENTRA EN TALLER"
+            }
+        }else{
+            const responseInsert = await connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
+            return responseInsert;  
+        }
+                   
     };
     
     static insertDetalle = async (item: DetalleServicio) => {     

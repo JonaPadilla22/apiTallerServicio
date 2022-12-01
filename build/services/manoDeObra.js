@@ -24,6 +24,13 @@ ManoDeObraService.getWorkforces = () => __awaiter(void 0, void 0, void 0, functi
     });
     return users;
 });
+ManoDeObraService.getWorkforcesActives = () => __awaiter(void 0, void 0, void 0, function* () {
+    let [rows] = yield database_1.connection.query('SELECT * FROM mano_obra WHERE estatus = "A"');
+    let users = rows.map((r) => {
+        return r;
+    });
+    return users;
+});
 ManoDeObraService.getWorkforceById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     let [rows] = yield database_1.connection.query('SELECT * FROM mano_obra WHERE ID_MANO_OBRA = ?', [parseInt(id)]);
     let users = rows.map((r) => {

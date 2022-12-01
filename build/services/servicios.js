@@ -201,8 +201,21 @@ ServiciosService.insert = (item) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 ServiciosService.update = (item, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
-    return responseInsert;
+    if (item.ID_ESTATUS) {
+        let [rows] = yield database_1.connection.query('SELECT COUNT(*) FROM servicio WHERE matricula = ? AND (ID_ESTATUS = "I" OR ID_ESTATUS = "E" OR ID_ESTATUS = "R" OR ID_ESTATUS = "S") AND id_servicio != ?', [item.MATRICULA, id]);
+        var count = rows[0]['COUNT(*)'];
+        if (count == 0) {
+            const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
+            return responseInsert;
+        }
+        else {
+            return "VEHICULO SE ENCUENTRA EN TALLER";
+        }
+    }
+    else {
+        const responseInsert = yield database_1.connection.query('UPDATE servicio SET ? WHERE id_servicio = ?', [item, id]);
+        return responseInsert;
+    }
 });
 ServiciosService.insertDetalle = (item) => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield database_1.connection.query('SELECT * FROM detalle_servicio WHERE id_servicio = ? AND id_producto = ? AND tipo_prod = ?', [item.ID_SERVICIO, item.ID_PRODUCTO, item.TIPO_PROD]);

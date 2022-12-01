@@ -6,7 +6,7 @@ export interface Servicio {
     CLIENTE?: number,
     TECNICO_ENCARGADO?: number,
     TIEMPO_ESTIMADO_MIN?: number,
-    ESTATUS?: string
+    ID_ESTATUS?: string
 }
 
 export interface DetalleServicio {

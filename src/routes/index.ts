@@ -13,6 +13,7 @@ import repairType from "./tipoRefaccion";
 import serviceType from "./tipoServicio";
 import userType from "./tipoUsuario";
 import firebase from "./firebase";
+import dashboard from "./dashboard";
 
 const routes = Router();
 
@@ -29,5 +30,6 @@ routes.use("/tipoRefaccion", repairType);
 routes.use("/tipoServicio", serviceType);
 routes.use("/tipoUsuario", userType);
 routes.use("/firebase", firebase);
+routes.use("/dashboard", dashboard);
 
 export default routes;

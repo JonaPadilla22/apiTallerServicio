@@ -4,6 +4,7 @@ const express_1 = require("express");
 const manoDeObra_1 = require("../controllers/manoDeObra");
 const route = (0, express_1.Router)();
 route.get('/', manoDeObra_1.ManoDeObraController.getAll);
+route.get('/actives', manoDeObra_1.ManoDeObraController.getActives);
 route.get('/:id', manoDeObra_1.ManoDeObraController.getById);
 route.post('/', manoDeObra_1.ManoDeObraController.insert);
 route.put('/:id', manoDeObra_1.ManoDeObraController.update);
