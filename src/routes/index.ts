@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { revisarSesion } from "../middlewares/sesion";
+// import { revisarSesion } from "../middlewares/sesion";
 import auth from "./auth";
 import usuarios from "./usuarios";
 import vehiculos from "./vehiculos"
