@@ -167,7 +167,12 @@ ServiciosController.getActualizacionByUsuario = (req, res) => __awaiter(void 0, 
 ServiciosController.insertActualizacion = ({ body }, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const response = yield servicios_1.ServiciosService.insertActualizacion(body);
-        res.status(201).json({ message: "ACTUALIZADO CON ÉXITO", data: response });
+        if (response != "VEHICULO SE ENCUENTRA EN TALLER") {
+            res.status(201).json({ message: "ACTUALIZADO CON ÉXITO", data: response });
+        }
+        else {
+            res.json({ message: "VEHÍCULO SE ENCUENTRA EN TALLER" }).status(204);
+        }
     }
     catch (e) {
         res.status(500).json(e);

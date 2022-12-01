@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const sesion_1 = require("../middlewares/sesion");
 const auth_1 = __importDefault(require("./auth"));
 const usuarios_1 = __importDefault(require("./usuarios"));
 const vehiculos_1 = __importDefault(require("./vehiculos"));
@@ -21,7 +20,7 @@ const firebase_1 = __importDefault(require("./firebase"));
 const dashboard_1 = __importDefault(require("./dashboard"));
 const routes = (0, express_1.Router)();
 routes.use("/auth", auth_1.default);
-routes.use("/usuarios", sesion_1.revisarSesion, usuarios_1.default);
+routes.use("/usuarios", usuarios_1.default);
 routes.use("/vehiculos", vehiculos_1.default);
 routes.use("/refacciones", refacciones_1.default);
 routes.use("/servicios", servicios_1.default);
