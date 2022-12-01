@@ -158,7 +158,11 @@ class ServiciosController {
         try{                               
             const response = await ServiciosService.insertActualizacion(body);
 
-            res.status(201).json({message: "ACTUALIZADO CON ÉXITO", data: response});     
+            if(response != "VEHICULO SE ENCUENTRA EN TALLER"){
+                res.status(201).json({message: "ACTUALIZADO CON ÉXITO", data: response});     
+            }else{
+                res.json({message: "VEHÍCULO SE ENCUENTRA EN TALLER"}).status(204);     
+            }    
         }catch(e){
             res.status(500).json(e);
         }
