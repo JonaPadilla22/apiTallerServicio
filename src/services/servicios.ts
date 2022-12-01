@@ -396,6 +396,7 @@ class ServiciosService {
             let [rows] = await connection.query('SELECT COUNT(*) FROM servicio WHERE matricula = ? AND (ID_ESTATUS = "I" OR ID_ESTATUS = "E" OR ID_ESTATUS = "R" OR ID_ESTATUS = "S") AND id_servicio != ?',[item.MATRICULA, item.ID_SERVICIO]);
             var count = rows[0]['COUNT(*)'];
             if(count==0){
+                delete item.MATRICULA;
                 await connection.query('INSERT INTO actualizacion_servicio SET ?', [item]);
                 await connection.query('UPDATE servicio SET id_estatus = ? WHERE id_servicio = ?', [item.ID_ESTATUS, item.ID_SERVICIO]);
                 return item; 
